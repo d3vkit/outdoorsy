@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 ruby '3.1.1'
 
+gem 'activesupport'
+gem 'pry-byebug'
+
 group :development do
-  gem 'activesupport'
   gem 'guard-rspec', require: false
-  gem 'pry'
-  gem 'pry-byebug'
   gem 'rspec'
   gem 'rubocop', require: false
 end

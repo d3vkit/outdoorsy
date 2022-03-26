@@ -34,11 +34,29 @@ RSpec.describe CustomerImporter do
     end
 
     context 'when both file path and file arguments are given' do
-      let(:file_path)  { 'file.text' }
-      let(:local_file) { write_test_file }
+      let(:file_path)  { 'file.txt' }
+      let(:local_file) { read_test_file }
+
+      before { write_test_file }
 
       it 'raises an ArgumentError' do
         expect { customer_importer }.to raise_error(ArgumentError, 'Must provide only file path or file!')
+      end
+    end
+
+    context 'when file does not exists at given file path' do
+      let(:file_path) { 'my-file.txt' }
+
+      it 'raises an ArgumentError' do
+        expect { customer_importer }.to raise_error(ArgumentError, 'File must exist at given file path!')
+      end
+    end
+
+    context 'when file given is not a File' do
+      let(:local_file) { 'string' }
+
+      it 'raises an ArgumentError' do
+        expect { customer_importer }.to raise_error(ArgumentError, 'File must be a real file!')
       end
     end
   end
@@ -59,7 +77,9 @@ RSpec.describe CustomerImporter do
     end
 
     context 'when file argument is given' do
-      let(:local_file) { write_test_file }
+      let(:local_file) { read_test_file }
+
+      before { write_test_file }
 
       it { is_expected.to eq local_file }
     end

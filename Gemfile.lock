@@ -91,7 +91,6 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   guard-rspec
-  pry
   pry-byebug
   rspec
   rubocop
