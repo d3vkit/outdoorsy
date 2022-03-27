@@ -1,6 +1,9 @@
 AllCops:
   TargetRubyVersion: 3.1
   NewCops: enable
+  Exclude:
+    - Guardfile
+    - spec/spec_helper.rb
 
 Metrics/BlockLength:
   Enabled: true

@@ -11,7 +11,9 @@ module Decorators
     end
 
     def formatted_length
-      matches = /\A([0-9]+)\s*(?:ft|feet|')(?:,)?\s*(?:([0-9]+)\s*(?:in|inches|")?)?\z/.match(length)
+      matches = /\A([0-9]+)\s*(?:ft|feet|'|’)(?:,)?\s*(?:([0-9]+)\s*(?:in|inches|"|”)?)?\z/.match(length)
+
+      return unless matches
 
       str = "#{matches[1]}'"
       str += " #{matches[2]}\"" if matches[2]
