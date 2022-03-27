@@ -35,11 +35,15 @@ irb(main):004:0> customers.show
 This will print to stdout a table like this:
 
 ```ruby
-Name | Email | Vehicle Type | Vehicle Name | Vehicle Length in Inches
-Greta Thunberg | greta@future.com | sailboat | Fridays For Future | 384
-Xiuhtezcatl Martinez | martinez@earthguardian.org | campervan | Earth Guardian | 336
-Mandip Singh Soin | mandip@ecotourism.net | motorboat | Frozen Trekker | 384
-Jimmy Buffet | jb@sailor.com | sailboat | Margaritaville | 480=> nil
++----------------------+----------------------------+--------------+--------------------+--------------------------+
+| Name                 | Email                      | Vehicle Type | Vehicle Name       | Vehicle Length in Inches |
++----------------------+----------------------------+--------------+--------------------+--------------------------+
+| Greta Thunberg       | greta@future.com           | sailboat     | Fridays For Future | 384                      |
+| Xiuhtezcatl Martinez | martinez@earthguardian.org | campervan    | Earth Guardian     | 336                      |
+| Mandip Singh Soin    | mandip@ecotourism.net      | motorboat    | Frozen Trekker     | 384                      |
+| Jimmy Buffet         | jb@sailor.com              | sailboat     | Margaritaville     | 480                      |
++----------------------+----------------------------+--------------+--------------------+--------------------------+
+4 rows in set=> nil 
 ```
 
 The list can be sorted on the following columns:
@@ -60,19 +64,27 @@ For example:
 ```ruby
 customers.show(sort: :vehicle_length_in_inches, dir: :desc)
 
-Name | Email | Vehicle Type | Vehicle Name | Vehicle Length in Inches
-Jimmy Buffet | jb@sailor.com | sailboat | Margaritaville | 480
-Mandip Singh Soin | mandip@ecotourism.net | motorboat | Frozen Trekker | 384
-Greta Thunberg | greta@future.com | sailboat | Fridays For Future | 384
-Xiuhtezcatl Martinez | martinez@earthguardian.org | campervan | Earth Guardian | 336=> nil
++----------------------+----------------------------+--------------+--------------------+--------------------------+
+| Name                 | Email                      | Vehicle Type | Vehicle Name       | Vehicle Length in Inches |
++----------------------+----------------------------+--------------+--------------------+--------------------------+
+| Jimmy Buffet         | jb@sailor.com              | sailboat     | Margaritaville     | 480                      |
+| Mandip Singh Soin    | mandip@ecotourism.net      | motorboat    | Frozen Trekker     | 384                      |
+| Greta Thunberg       | greta@future.com           | sailboat     | Fridays For Future | 384                      |
+| Xiuhtezcatl Martinez | martinez@earthguardian.org | campervan    | Earth Guardian     | 336                      |
++----------------------+----------------------------+--------------+--------------------+--------------------------+
+4 rows in set=> nil 
 
 ---
 
 customers.show(sort: :vehicle_name, dir: :asc)
 
-Name | Email | Vehicle Type | Vehicle Name | Vehicle Length in Inches
-Xiuhtezcatl Martinez | martinez@earthguardian.org | campervan | Earth Guardian | 336
-Greta Thunberg | greta@future.com | sailboat | Fridays For Future | 384
-Mandip Singh Soin | mandip@ecotourism.net | motorboat | Frozen Trekker | 384
-Jimmy Buffet | jb@sailor.com | sailboat | Margaritaville | 480=> nil
++----------------------+----------------------------+--------------+--------------------+--------------------------+
+| Name                 | Email                      | Vehicle Type | Vehicle Name       | Vehicle Length in Inches |
++----------------------+----------------------------+--------------+--------------------+--------------------------+
+| Xiuhtezcatl Martinez | martinez@earthguardian.org | campervan    | Earth Guardian     | 336                      |
+| Greta Thunberg       | greta@future.com           | sailboat     | Fridays For Future | 384                      |
+| Mandip Singh Soin    | mandip@ecotourism.net      | motorboat    | Frozen Trekker     | 384                      |
+| Jimmy Buffet         | jb@sailor.com              | sailboat     | Margaritaville     | 480                      |
++----------------------+----------------------------+--------------+--------------------+--------------------------+
+4 rows in set=> nil 
 ```
