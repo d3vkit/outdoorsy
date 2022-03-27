@@ -1,20 +1,21 @@
 # frozen_string_literal: true
 
+require 'hirb'
+
 require_relative '../../lib/customers_list'
 
 def format_customer(customer)
-  dec_customer = Decorators::CustomerDecorator.new(customer)
-
-  "#{dec_customer.name} | #{dec_customer.email} | #{dec_customer.vehicle_type} |" \
-    " #{dec_customer.vehicle.name} | #{dec_customer.vehicle.length_in_inches}"
+  Decorators::CustomerDecorator.new(customer).to_table
 end
 
 def format_customers(customers)
-  customers.map { |c| format_customer(c) }.join("\n")
+  customers.map { |c| format_customer(c) }
 end
 
-def format_with_header(customers)
-  "Name | Email | Vehicle Type | Vehicle Name | Vehicle Length in Inches\n#{format_customers(customers)}"
+def render_customers(customers)
+  headers = ['Name', 'Email', 'Vehicle Type', 'Vehicle Name', 'Vehicle Length in Inches']
+
+  Hirb::Helpers::AutoTable.render(format_customers(customers), headers:)
 end
 
 RSpec.describe CustomersList do
@@ -30,7 +31,7 @@ RSpec.describe CustomersList do
     subject(:show) { customers_list.show }
 
     it 'prints customer info' do
-      expected = format_with_header(customers)
+      expected = render_customers(customers)
 
       expect { show }.to output(expected).to_stdout
     end
@@ -39,7 +40,7 @@ RSpec.describe CustomersList do
       subject(:show) { customers_list.show(sort: :name) }
 
       it 'prints sorted customer info' do
-        expected = format_with_header([customer1, customer3, customer4, customer2])
+        expected = render_customers([customer1, customer3, customer4, customer2])
 
         expect { show }.to output(expected).to_stdout
       end
@@ -57,7 +58,7 @@ RSpec.describe CustomersList do
 
       it { is_expected.to eq customers }
 
-      context "when dir is desc" do
+      context 'when dir is desc' do
         let(:dir)      { :desc }
         let(:expected) { [customer4, customer3, customer2, customer1] }
 

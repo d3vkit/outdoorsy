@@ -2,6 +2,8 @@
 
 require 'active_support'
 require 'active_support/core_ext/array/wrap'
+require 'hirb'
+require 'pry'
 
 require_relative 'decorators/customer_decorator'
 
@@ -17,9 +19,9 @@ class CustomersList
   end
 
   def show(sort: :none, dir: :asc)
-    print_headers
     sorted_customers = sort(type: sort, dir:)
-    sorted_customers.each { |customer| print "\n#{customer}" }
+
+    print Hirb::Helpers::AutoTable.render(sorted_customers.map(&:to_table), headers:)
 
     nil
   end
@@ -46,10 +48,6 @@ class CustomersList
       value = value.downcase if value.is_a?(String)
       value
     end
-  end
-
-  def print_headers
-    print headers.join(' | ')
   end
 
   def headers

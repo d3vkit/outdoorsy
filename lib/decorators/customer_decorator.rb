@@ -18,5 +18,9 @@ module Decorators
     def to_s
       "#{name} | #{email} | #{vehicle.type} | #{vehicle.name} | #{vehicle.length_in_inches}"
     end
+
+    def to_table
+      [name, email, vehicle.type, vehicle.name, vehicle.length_in_inches]
+    end
   end
 end
