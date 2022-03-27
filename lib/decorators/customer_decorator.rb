@@ -11,6 +11,10 @@ module Decorators
       @vehicle ||= VehicleDecorator.new(__getobj__.vehicle)
     end
 
+    def vehicle_length_in_inches
+      vehicle.length_in_inches
+    end
+
     def to_s
       "#{name} | #{email} | #{vehicle.type} | #{vehicle.name} | #{vehicle.length_in_inches}"
     end

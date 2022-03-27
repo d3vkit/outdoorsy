@@ -130,20 +130,20 @@ RSpec.describe CustomersList do
       end
     end
 
-    # context 'when sorting by vehicle length' do
-    #   let(:type)     { :email }
-    #   let(:expected) { [customer1, customer3, customer4, customer2] }
+    context 'when sorting by vehicle length in inches' do
+      let(:type)     { :vehicle_length_in_inches }
+      let(:expected) { [customer4, customer3, customer1, customer2] }
 
-    #   it { is_expected.to eq expected }
+      it { is_expected.to eq expected }
 
-    #   context 'when dir is desc' do
-    #     let(:dir) { :desc }
+      context 'when dir is desc' do
+        let(:dir) { :desc }
 
-    #     let(:expected) { [customer2, customer4, customer3, customer1] }
+        let(:expected) { [customer2, customer1, customer3, customer4] }
 
-    #     it { is_expected.to eq expected }
-    #   end
-    # end
+        it { is_expected.to eq expected }
+      end
+    end
 
     context 'when sorting by an invalid sort type' do
       let(:type) { :invalid }

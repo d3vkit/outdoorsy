@@ -2,13 +2,14 @@
 
 require 'active_support'
 require 'active_support/core_ext/array/wrap'
+require 'pry'
 
 require_relative 'decorators/customer_decorator'
 
 class CustomersList
   attr_reader :customers
 
-  SORT_TYPES = %i[none name first_name last_name email vehicle_type vehicle_name].freeze
+  SORT_TYPES = %i[none name first_name last_name email vehicle_type vehicle_name vehicle_length_in_inches].freeze
   SORT_DIRS = %i[asc desc].freeze
 
   def initialize(customers = [])
@@ -27,7 +28,12 @@ class CustomersList
     raise ArgumentError, "Invalid sort dir, given #{dir}" unless SORT_DIRS.include?(dir)
     return customers if type == :none
 
-    new_customers = customers.sort_by { |customer| customer.public_send(type).downcase }
+    new_customers = customers.sort_by do |customer|
+      value = customer.public_send(type)
+      value = value.downcase if value.is_a?(String)
+      value
+    end
+
     new_customers.reverse! if dir == :desc
 
     new_customers
