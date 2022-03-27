@@ -17,6 +17,8 @@ module Ui
       intro
     end
 
+    private
+
     def intro
       UiManager.clear_screen
       UiManager.write('### CUSTOMER LIST TOOL ###')
@@ -25,14 +27,19 @@ module Ui
       setup
     end
 
+    def check_setup_input(new_file_path, new_col_sep)
+      UiManager.clear_screen
+      UiManager.write("File Path: #{new_file_path}\nColumn Separator: #{new_col_sep}")
+      UiManager.line_break
+
+      UiManager.boolean_check('Is this correct? Y/N: ')
+    end
+
     def setup
       new_file_path = UiManager.collect_input('Path of file to parse: ', default: 'tmp/commas.txt')
       new_col_sep = UiManager.collect_input('Column Separator', default: ',')
 
-      UiManager.clear_screen
-      UiManager.write("File Path: #{new_file_path}\nColumn Separator: #{new_col_sep}")
-      UiManager.line_break
-      correct = UiManager.boolean_check('Is this correct? Y/N: ')
+      correct = check_setup_input(new_file_path, new_col_sep)
 
       setup unless correct
 
@@ -41,28 +48,29 @@ module Ui
 
       import
     rescue ArgumentError, Errno::EISDIR => e
-      UiManager.line_break
-      UiManager.write_errors(e.message)
-
-      intro
+      write_errors(e) { intro }
     end
 
     def import
       list = CustomerImporter.new(file_path:, col_sep:)
       customers = list.parse
 
+      UiManager.clear_screen
+
       show(customers)
     end
 
-    def show(customers, sort: :none, dir: :asc)
-      UiManager.clear_screen
-
-      customers.show(sort:, dir:)
-
+    def print_sort_columns
       UiManager.write("\n")
       UiManager.line_break
       UiManager.write("Sort columns: #{CustomersList::SORT_TYPES.join(', ')}")
       UiManager.line_break
+    end
+
+    def show(customers, sort: :none, dir: :asc)
+      customers.show(sort:, dir:)
+
+      print_sort_columns
 
       new_sort = UiManager.collect_input('Sort results on column', default: 'none')
 
@@ -73,10 +81,14 @@ module Ui
 
       show(customers, sort: new_sort, dir: new_dir)
     rescue ArgumentError => e
-      UiManager.line_break
-      UiManager.write_errors(e.message)
+      write_errors(e) { show(customers, sort: :none, dir: :asc) }
+    end
 
-      show(customers, sort: :none, dir: :asc)
+    def write_errors(error, &block)
+      UiManager.line_break
+      UiManager.write_errors(error.message)
+
+      block.call
     end
   end
 end

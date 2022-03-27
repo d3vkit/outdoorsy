@@ -12,18 +12,7 @@ module Ui
     EXIT_WORDS = %w[q quit exit].freeze
 
     def self.collect_input(prepend_text = nil, default: nil)
-      input = ''
-
-      while input == ''
-        print prepend_text if prepend_text
-        print " (press enter to use default #{default}): " unless default.nil?
-
-        input = gets.chomp
-
-        break if input == '' && !default.nil?
-
-        UiManager.write('Invalid input, please try again', color: 'red') if input == ''
-      end
+      input = get_input(prepend_text, default)
 
       UiManager.quit if EXIT_WORDS.include?(input)
 
@@ -44,5 +33,24 @@ module Ui
       return true if YES_WORDS.include?(input)
       return false if NO_WORDS.include?(input)
     end
+
+    def self.get_input(prepend_text, default)
+      input = ''
+
+      while input == ''
+        print prepend_text if prepend_text
+        print " (press enter to use default #{default}): " unless default.nil?
+
+        input = gets.chomp
+
+        break if input == '' && !default.nil?
+
+        UiManager.write('Invalid input, please try again', color: 'red') if input == ''
+      end
+
+      input
+    end
+
+    private_class_method :get_input
   end
 end
