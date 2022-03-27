@@ -7,7 +7,6 @@ module Ui
   class InputManager
     include Singleton
 
-    # BOOL_WORDS = %w[y yes 1 true n no 0 false].freeze
     YES_WORDS = %w[y yes 1 true].freeze
     NO_WORDS = %w[n no 0 false].freeze
     EXIT_WORDS = %w[q quit exit].freeze
