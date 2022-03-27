@@ -56,6 +56,13 @@ RSpec.describe CustomersList do
       let(:type) { :none }
 
       it { is_expected.to eq customers }
+
+      context "when dir is desc" do
+        let(:dir)      { :desc }
+        let(:expected) { [customer4, customer3, customer2, customer1] }
+
+        it { is_expected.to eq expected }
+      end
     end
 
     context 'when sorting by name' do

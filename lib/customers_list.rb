@@ -30,8 +30,6 @@ class CustomersList
 
     validate_sort(type, dir)
 
-    return customers if type == :none
-
     new_customers = sort_customers(type)
     new_customers.reverse! if dir == :desc
 
@@ -41,6 +39,8 @@ class CustomersList
   private
 
   def sort_customers(type)
+    return customers if type == :none
+
     customers.sort_by do |customer|
       value = customer.public_send(type)
       value = value.downcase if value.is_a?(String)
