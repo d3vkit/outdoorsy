@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 ruby '3.1.1'
 
 gem 'activesupport'
+gem 'hirb'
 
 group :development do
   gem 'guard-rspec', require: false
