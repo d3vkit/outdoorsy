@@ -13,6 +13,10 @@ group :development do
   gem 'rubocop-rspec', require: false
 end
 
+group :test do
+  gem 'simplecov', require: false
+end
+
 group :development, :test do
   gem 'factory_bot'
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
