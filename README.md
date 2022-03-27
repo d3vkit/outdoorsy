@@ -9,20 +9,27 @@ For example,
 if you have a file named `customer-list.txt`, you could place it in the `tmp` folder, and the relative path would be `tmp/customer-list.txt`.
 
 ---
+The tool can be used through a terminal:
+
+```ruby
+$ ruby customer_list.rb
+```
+
+---
+
 To use the list tool from a Ruby console:
 
 ```ruby
-require_relative 'lib/customer_importer'
+irb(main):001:0> require_relative 'lib/customer_importer'
 
 # Provide the path of the file you want to parse
-list = CustomerImporter.new(file_path: 'tmp/commas.txt')
+irb(main):002:0> list = CustomerImporter.new(file_path: 'tmp/commas.txt')
 
 # If the file uses a different separator:
 # list = CustomerImporter.new(file_path: 'tmp/pipes.txt', col_sep: '|')
 
-customers = list.parse
-
-customers.show
+irb(main):003:0> customers = list.parse
+irb(main):004:0> customers.show
 ```
 
 This will print to stdout a table like this:

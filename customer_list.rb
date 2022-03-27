@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-require './lib/customer_importer'
+require_relative 'lib/ui/console'
 
-CustomerImporter.new
+Ui::Console.new

@@ -20,7 +20,7 @@ RSpec.describe CustomerImporter do
       expect(result.customers.first.name).to eq 'Greta Thunberg'
     end
 
-    context 'when given a different column seperator' do
+    context 'when given a different column separator' do
       let(:file_path) { 'spec/fixtures/pipes.txt' }
       let(:col_sep)   { '|' }
 
