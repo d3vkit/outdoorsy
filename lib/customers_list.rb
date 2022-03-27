@@ -25,16 +25,14 @@ class CustomersList
   end
 
   def sort(type:, dir:)
-    raise ArgumentError, "Invalid sort type, given #{type}" unless SORT_TYPES.include?(type)
-    raise ArgumentError, "Invalid sort dir, given #{dir}" unless SORT_DIRS.include?(dir)
+    type = type.to_sym
+    dir = dir.to_sym
+
+    validate_sort(type, dir)
+
     return customers if type == :none
 
-    new_customers = customers.sort_by do |customer|
-      value = customer.public_send(type)
-      value = value.downcase if value.is_a?(String)
-      value
-    end
-
+    new_customers = sort_customers(type)
     new_customers.reverse! if dir == :desc
 
     new_customers
@@ -42,11 +40,24 @@ class CustomersList
 
   private
 
+  def sort_customers(type)
+    customers.sort_by do |customer|
+      value = customer.public_send(type)
+      value = value.downcase if value.is_a?(String)
+      value
+    end
+  end
+
   def print_headers
     print headers.join(' | ')
   end
 
   def headers
     ['Name', 'Email', 'Vehicle Type', 'Vehicle Name', 'Vehicle Length in Inches']
+  end
+
+  def validate_sort(type, dir)
+    raise ArgumentError, "Invalid sort type, given #{type}" unless SORT_TYPES.include?(type)
+    raise ArgumentError, "Invalid sort dir, given #{dir}" unless SORT_DIRS.include?(dir)
   end
 end
