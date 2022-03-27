@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'delegate'
-require 'pry'
 
 require_relative 'base_decorator'
 
