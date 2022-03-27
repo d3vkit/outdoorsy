@@ -27,6 +27,24 @@ RSpec.describe Decorators::VehicleDecorator do
       end
     end
 
+    context 'when length uses slanted prime' do
+      let(:length)  { '12’' }
+
+      it { is_expected.to eq "12'" }
+
+      context 'when length includes inches' do
+        let(:length) { '12’ 2”' }
+
+        it { is_expected.to eq "12' 2\"" }
+
+        context 'when inches has a comma' do
+          let(:length) { '12’, 2”' }
+
+          it { is_expected.to eq "12' 2\"" }
+        end
+      end
+    end
+
     context 'when length uses ft' do
       let(:length) { '12ft' }
 

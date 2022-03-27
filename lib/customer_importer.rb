@@ -5,6 +5,7 @@ require 'csv'
 
 require_relative 'customers_list'
 require_relative 'customer_builder'
+require_relative 'decorators/customer_decorator'
 require_relative 'models/customer'
 require_relative 'models/vehicle'
 
@@ -24,7 +25,10 @@ class CustomerImporter
   def parse
     @parse ||= begin
       File.open(@file_path) do |file|
-        CSV.foreach(file, col_sep:) { |row| @customers_list.customers << CustomerBuilder.from_row(row) }
+        CSV.foreach(file, col_sep:) do |row|
+          customer = CustomerBuilder.from_row(row)
+          @customers_list.customers << Decorators::CustomerDecorator.new(customer)
+        end
       end
 
       @customers_list

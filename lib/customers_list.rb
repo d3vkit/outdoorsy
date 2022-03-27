@@ -20,6 +20,8 @@ class CustomersList
     print_headers
     sorted_customers = sort(type: sort, dir:)
     sorted_customers.each { |customer| print "\n#{customer}" }
+
+    nil
   end
 
   def sort(type:, dir:)

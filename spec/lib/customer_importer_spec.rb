@@ -16,7 +16,7 @@ RSpec.describe CustomerImporter do
     it 'has customer data', :aggregate_failures do
       result = parse
 
-      expect(result.customers.first).to be_a Models::Customer
+      expect(result.customers.first).to be_a Decorators::CustomerDecorator
       expect(result.customers.first.name).to eq 'Greta Thunberg'
     end
 
@@ -29,7 +29,7 @@ RSpec.describe CustomerImporter do
       it 'has customer data', :aggregate_failures do
         result = parse
 
-        expect(result.customers.first).to be_a Models::Customer
+        expect(result.customers.first).to be_a Decorators::CustomerDecorator
         expect(result.customers.first.name).to eq 'Ansel Adams'
       end
     end
