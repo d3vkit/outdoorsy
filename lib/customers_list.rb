@@ -2,7 +2,6 @@
 
 require 'active_support'
 require 'active_support/core_ext/array/wrap'
-require 'pry'
 
 require_relative 'decorators/customer_decorator'
 
