@@ -3,21 +3,34 @@
 require 'active_support'
 require 'active_support/core_ext/array/wrap'
 
+require_relative 'decorators/customer_decorator'
+
 class CustomersList
   attr_reader :customers
 
+  SORT_TYPES = %i[none name first_name last_name email vehicle_type vehicle_name].freeze
+  SORT_DIRS = %i[asc desc].freeze
+
   def initialize(customers = [])
-    @customers = Array.wrap(customers)
+    customers = Array.wrap(customers)
+    @customers = Decorators::CustomerDecorator.from_collection(customers)
   end
 
-  def show
+  def show(sort: :none, dir: :asc)
     print_headers
+    sorted_customers = sort(type: sort, dir:)
+    sorted_customers.each { |customer| print "\n#{customer}" }
+  end
 
-    customers.each do |customer|
-      print "\n"
-      print "#{customer.name} | #{customer.email} | #{customer.vehicle_type} | #{customer.vehicle_name} |"
-      print " #{customer.vehicle_length}"
-    end
+  def sort(type:, dir:)
+    raise ArgumentError, "Invalid sort type, given #{type}" unless SORT_TYPES.include?(type)
+    raise ArgumentError, "Invalid sort dir, given #{dir}" unless SORT_DIRS.include?(dir)
+    return customers if type == :none
+
+    new_customers = customers.sort_by { |customer| customer.public_send(type).downcase }
+    new_customers.reverse! if dir == :desc
+
+    new_customers
   end
 
   private
@@ -27,6 +40,6 @@ class CustomersList
   end
 
   def headers
-    ['Name', 'Email', 'Vehicle Type', 'Vehicle Name', 'Vehicle Length']
+    ['Name', 'Email', 'Vehicle Type', 'Vehicle Name', 'Vehicle Length in Inches']
   end
 end

@@ -14,6 +14,8 @@ class CustomerImporter
   alias customers customers_list
 
   def initialize(file_path:, col_sep: ',')
+    raise ArgumentError, 'File must exist!' unless File.exist?(file_path)
+
     @file_path = file_path
     @col_sep = col_sep
     @customers_list = CustomersList.new
