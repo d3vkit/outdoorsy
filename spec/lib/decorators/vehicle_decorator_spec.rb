@@ -28,7 +28,7 @@ RSpec.describe Decorators::VehicleDecorator do
     end
 
     context 'when length uses slanted prime' do
-      let(:length)  { '12’' }
+      let(:length) { '12’' }
 
       it { is_expected.to eq "12'" }
 
